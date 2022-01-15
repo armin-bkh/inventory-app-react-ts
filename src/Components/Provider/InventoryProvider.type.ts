@@ -1,11 +1,11 @@
 export type filters = {
-  id: number;
+  id?: number;
   label: string;
   value: string;
 };
 
 export type products = {
-  id: number;
+  id?: number;
   name: string;
   filter: string;
 };
