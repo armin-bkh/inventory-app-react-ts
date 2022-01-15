@@ -1,9 +1,11 @@
+import { ToastProvider } from "react-toast-notifications";
+import InventoryProvider from "./Components/Provider/InventoryProvider";
 
 function App() {
   return (
-    <div>
-      inventory-app
-    </div>
+    <InventoryProvider>
+      <ToastProvider>inventory-app</ToastProvider>
+    </InventoryProvider>
   );
 }
 
