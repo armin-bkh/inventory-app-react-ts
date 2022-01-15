@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react"
+import { useContext, useEffect, useReducer } from "react"
 import { InventoryActionContext, InventoryContext } from "../../Context/InventoryContext"
 import { inventoryActionType, inventoryStateType } from "./InventoryProvider.type"
 
@@ -37,3 +37,9 @@ const InventoryProvider = ({ children }: inventoryProviderProps) => {
 }
 
 export default InventoryProvider;
+
+export const useInventory = () => useContext(InventoryContext);
+
+export const useInventoryActions = () => {
+    const dispatch = useContext(InventoryActionContext);
+}
