@@ -1,10 +1,13 @@
 import { ToastProvider } from "react-toast-notifications";
+import Filters from "./Components/Filters/Filters";
 import InventoryProvider from "./Components/Provider/InventoryProvider";
 
 function App() {
   return (
     <InventoryProvider>
-      <ToastProvider>inventory-app</ToastProvider>
+      <ToastProvider>
+        <Filters />
+      </ToastProvider>
     </InventoryProvider>
   );
 }
