@@ -1,18 +1,9 @@
 import { useEffect, useReducer } from "react"
 import { InventoryActionContext, InventoryContext } from "../../Context/InventoryContext"
+import { inventoryActionType, inventoryStateType } from "./InventoryProvider.type"
 
 interface inventoryProviderProps {
     children: React.ReactChild
-}
-
-interface inventoryStateType {
-    filters: {}[],
-    products: {}[]
-}
-
-interface inventoryActionType {
-    type: string,
-    payload?: any
 }
 
 const initialState = {
@@ -37,8 +28,8 @@ const InventoryProvider = ({ children }: inventoryProviderProps) => {
     }, [])
 
     return (
-        <InventoryContext.Provider value={null}>
-            <InventoryActionContext.Provider value={null}>
+        <InventoryContext.Provider value={inventory}>
+            <InventoryActionContext.Provider value={dispatch}>
                 {children}
             </InventoryActionContext.Provider>
         </InventoryContext.Provider>

@@ -1,4 +1,5 @@
-import { createContext } from "react";
+import React, { createContext } from "react";
+import { inventoryActionType, inventoryStateType } from "../Components/Provider/InventoryProvider.type";
 
-export const InventoryContext = createContext(null);
-export const InventoryActionContext = createContext(null);
+export const InventoryContext = createContext<inventoryStateType>(null!);
+export const InventoryActionContext = createContext<React.Dispatch<inventoryActionType>>(null!);
