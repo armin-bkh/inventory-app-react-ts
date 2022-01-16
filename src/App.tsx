@@ -5,7 +5,7 @@ import InventoryProvider from "./Components/Provider/InventoryProvider";
 function App() {
   return (
     <InventoryProvider>
-      <ToastProvider>
+      <ToastProvider autoDismiss placement="top-right" newestOnTop>
         <main className="p-5">
           <Filters />
         </main>

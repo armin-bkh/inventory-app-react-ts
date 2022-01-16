@@ -23,11 +23,12 @@ const FilterForm = () => {
     const { filters } = useInventory();
     const { addFilterHandler } = useInventoryActions();
     const { addToast } = useToasts();
-    
+
     const onSubmit = (values: formValueType) => {
         if(!isExistFilter(filters, values.filter)) {
             addFilterHandler(values);
             addToast(`${values.filter} successfuly added`, {appearance: 'success'});
+            formik.handleReset();
         }
         else addToast(`${values.filter} is already exist`, {appearance: 'error'});
     }
