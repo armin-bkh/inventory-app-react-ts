@@ -3,6 +3,7 @@ import { useToasts } from "react-toast-notifications";
 import * as Yup from 'yup';
 import Input from "../../Common/Input/Input";
 import { useInventory, useInventoryActions } from "../../Provider/InventoryProvider";
+import { isExistFilter } from "../../Utils/isExistFilter";
 
 export interface formValueType {
     filter: string
@@ -22,9 +23,9 @@ const FilterForm = () => {
     const { filters } = useInventory();
     const { addFilterHandler } = useInventoryActions();
     const { addToast } = useToasts();
+    
     const onSubmit = (values: formValueType) => {
-        const isExist = filters.some(filter => filter.value.toLowerCase() === values.filter.toLowerCase());
-        if(!isExist) {
+        if(!isExistFilter(filters, values.filter)) {
             addFilterHandler(values);
             addToast(`${values.filter} successfuly added`, {appearance: 'success'});
         }

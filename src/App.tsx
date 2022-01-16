@@ -6,7 +6,9 @@ function App() {
   return (
     <InventoryProvider>
       <ToastProvider>
-        <Filters />
+        <main className="p-5">
+          <Filters />
+        </main>
       </ToastProvider>
     </InventoryProvider>
   );
