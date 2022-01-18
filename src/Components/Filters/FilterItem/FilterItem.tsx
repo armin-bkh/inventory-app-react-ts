@@ -1,5 +1,5 @@
 import { filters } from "../../Provider/InventoryProvider.type";
-import { useInventory } from "../../Provider/InventoryProvider";
+import { useInventory, useInventoryActions } from "../../Provider/InventoryProvider";
 import { filterCount } from "../../Utils/filterCount";
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
 import { useState } from "react";
@@ -11,6 +11,7 @@ interface filterItemProps {
 const FilterItem = ({ filter }: filterItemProps) => {
   const [isShow, setIsShow] = useState(false);
   const { products } = useInventory();
+  const { removeFilterHandler } = useInventoryActions();
 
   return (
     <div
@@ -28,17 +29,19 @@ const FilterItem = ({ filter }: filterItemProps) => {
         }`}
       >
         <button
-         type="button"
-        className="text-lg w-7 h-7 flex justify-center items-center border
+          type="button"
+          className="text-lg w-7 h-7 flex justify-center items-center border
          border-violet-400 bg-violet-200 text-violet-500 rounded-full"
-         onClick={()=> {}}>
+          onClick={() => {}}
+        >
           <AiFillEdit />
         </button>
         <button
-         type="button"
-        className="text-lg w-7 h-7 flex justify-center items-center border
+          type="button"
+          className="text-lg w-7 h-7 flex justify-center items-center border
          border-red-400 bg-red-200 text-red-500 rounded-full"
-         onClick={()=> {}}>
+          onClick={() => removeFilterHandler(filter.id)}
+        >
           <AiTwotoneDelete />
         </button>
       </div>

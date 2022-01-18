@@ -23,8 +23,10 @@ const reducer = (state: inventoryStateType, action: inventoryActionType) => {
                 value: action.payload,
                 id: new Date().getTime(),
             }
-            
             return {...state, filters: [...state.filters, newItem]}
+        }
+        case inventoryCases.REMOVEFILTER: {
+            return { ...state, filters: state.filters.filter(filter => filter.id !== action.payload) }
         }
     }
 }
@@ -51,9 +53,13 @@ export const useInventory = () => useContext(InventoryContext);
 
 export const useInventoryActions = () => {
     const dispatch = useContext(InventoryActionContext);
+
     const addFilterHandler = ({filter}: { filter: string }) => {
         dispatch({type: inventoryCases.ADDFILTER, payload: filter})
     }
+    const removeFilterHandler = (id: number) => {
+        dispatch({type: inventoryCases.REMOVEFILTER, payload: id});
+    }
 
-    return { addFilterHandler };
+    return { addFilterHandler, removeFilterHandler };
 }
