@@ -1,6 +1,7 @@
 import Input from '../../Common/Input/Input';
 import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
+import { useToasts } from 'react-toast-notifications';
 
 interface productFormValues {
     name: string,
@@ -24,11 +25,13 @@ interface productFormProps {
 
 
 const ProductForm = ({ handleAdd }: productFormProps) => {
+    const { addToast } = useToasts();
 
     const onSubmit = (values: productFormValues) => {
         console.log(values);
         handleAdd(values);
         formik.handleReset();
+        addToast(`${values.name} successfuly added`, { appearance: 'success' })
     }
 
     const formik: FormikProps<productFormValues> = useFormik<productFormValues>({
