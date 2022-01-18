@@ -68,9 +68,8 @@ const FilterForm = ({ id, handleEdit }: filterFormProps) => {
   });
 
   return (
-    <form className={`rounded-lg shadow-lg p-5`} onSubmit={formik.handleSubmit}>
+    <form className={`rounded-lg shadow-lg p-5 mx-auto lg:w-1/3`} onSubmit={formik.handleSubmit}>
       <Input
-      autoFocus
         type="text"
         name="filter"
         id="filterInput"
