@@ -1,16 +1,11 @@
-import { useInventory } from "../../Provider/InventoryProvider"
-import { filteredProducts } from "../../Utils/filteredProducts";
+import { useInventory } from "../../Provider/InventoryProvider";
+import ProductItem from "../ProductItem/ProductItem";
 
 const ProductsList = () => {
-    const { filters, products } = useInventory();
+    const { filters } = useInventory();
     return (
-        <section className="p-5 shadow-lg rounded-lg mb-10">
-            {
-                filters.length > 0 && filters.map(filter => <div key={filter.id}>
-                    {filter.label}
-                    <ul>{filteredProducts(products, filter.value).map(product => <li key={product.id}>{product.name}</li>)}</ul>
-                </div>) 
-            }
+        <section className="p-5 shadow-lg rounded-lg mb-10 grid grid-cols-1 md:gird-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {filters.length > 0 && filters.map(filter => <ProductItem key={filter.id} filter={filter} />)}
         </section>
     ) 
 }
