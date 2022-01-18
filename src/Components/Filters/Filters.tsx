@@ -30,6 +30,11 @@ const Filters = () => {
     setIsShow(false);
   }
 
+  const showHandler = () => {
+    setIsShow(prevIsShow => !prevIsShow);
+    setEdit(null);
+  }
+
   return (
     <section className="shadow-inner p-3 rounded-xl bg-white">
       {filters.length > 0 && (
@@ -38,7 +43,7 @@ const Filters = () => {
       {(filters.length === 0 || isShow) && <FilterForm id={edit} handleEdit={submitEditHandler} handleAdd={submitAddHandler} />}
       {filters.length > 0 && <ShowButton
         show={isShow}
-        setShow={() => setIsShow((prevIsShow) => !prevIsShow)}
+        setShow={showHandler}
         filter
       />}
     </section>
