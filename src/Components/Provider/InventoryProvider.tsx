@@ -17,6 +17,7 @@ const reducer = (state: inventoryStateType, action: inventoryActionType) => {
             const savedInventory = JSON.parse(localStorage.getItem('inventory')!);
             return savedInventory || state;
         }
+
         case inventoryCases.ADDFILTER: {
             const newItem = {
                 label: action.payload,
@@ -25,8 +26,19 @@ const reducer = (state: inventoryStateType, action: inventoryActionType) => {
             }
             return {...state, filters: [...state.filters, newItem]}
         }
+
         case inventoryCases.REMOVEFILTER: {
             return { ...state, filters: state.filters.filter(filter => filter.id !== action.payload) }
+        }
+
+        case inventoryCases.EDITFILTER: {
+            const filtersClone = [...state.filters];
+            const index = filtersClone.findIndex(filter => filter.id === action.payload.id);
+            const selectedFilter = {...filtersClone[index]};
+            selectedFilter.label = action.payload.filter; 
+            selectedFilter.value = action.payload.filter;
+            filtersClone[index] = selectedFilter;
+            return { ...state, filters: filtersClone }
         }
     }
 }
@@ -65,5 +77,9 @@ export const useInventoryActions = () => {
         dispatch({type: inventoryCases.REMOVEFILTER, payload: id});
     }
 
-    return { addFilterHandler, removeFilterHandler };
+    const editFilterHandler = (id: number, filter: string) => {
+        dispatch({type: inventoryCases.EDITFILTER, payload: { id, filter }})
+    }
+
+    return { addFilterHandler, removeFilterHandler, editFilterHandler };
 }

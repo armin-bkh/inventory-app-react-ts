@@ -1,5 +1,5 @@
 import { filters } from "../../Provider/InventoryProvider.type";
-import { useInventory, useInventoryActions } from "../../Provider/InventoryProvider";
+import { useInventory } from "../../Provider/InventoryProvider";
 import { filterCount } from "../../Utils/filterCount";
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
 import { useState } from "react";
@@ -7,12 +7,12 @@ import { useState } from "react";
 interface filterItemProps {
   filter: filters;
   onDelete: () => void;
+  onEdit: () => void;
 }
 
-const FilterItem = ({ filter, onDelete }: filterItemProps) => {
+const FilterItem = ({ filter, onDelete, onEdit }: filterItemProps) => {
   const [isShow, setIsShow] = useState(false);
   const { products } = useInventory();
-  const { removeFilterHandler } = useInventoryActions();
 
   return (
     <div
@@ -33,7 +33,7 @@ const FilterItem = ({ filter, onDelete }: filterItemProps) => {
           type="button"
           className="text-lg w-7 h-7 flex justify-center items-center border
          border-violet-400 bg-violet-200 text-violet-500 rounded-full"
-          onClick={() => {}}
+          onClick={onEdit}
         >
           <AiFillEdit />
         </button>
