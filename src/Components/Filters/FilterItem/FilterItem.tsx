@@ -16,12 +16,12 @@ const FilterItem = ({ filter, onDelete, onEdit }: filterItemProps) => {
 
   return (
     <div
-      className="relative p-3 rounded-md flex flex-col items-center bg-green-400 overflow-hidden"
+      className="relative p-3 rounded-md flex flex-col items-center bg-green-400 shadow-md shadow-green-400/50 overflow-hidden"
       onClick={() => setIsShow((prevIsShow) => !prevIsShow)}
       onMouseLeave={() => setIsShow(false)}
     >
       {filter.label}
-      <span className="w-12 h-12 rounded-full bg-green-800 text-white mt-2 flex justify-center items-center">
+      <span className="w-9 h-9 lg:w-12 lg:h-12 rounded-full bg-green-800 text-white mt-2 flex justify-center items-center">
         {filterCount(products, filter.value)}
       </span>
       <div

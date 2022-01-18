@@ -1,13 +1,11 @@
 import { useFormik, FormikProps } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import * as Yup from "yup";
 import Input from "../../Common/Input/Input";
 import {
   useInventory,
-  useInventoryActions,
 } from "../../Provider/InventoryProvider";
-import { filters } from "../../Provider/InventoryProvider.type";
 import { isExistFilter } from "../../Utils/isExistFilter";
 
 export interface formValueType {
@@ -25,19 +23,24 @@ const validationSchema = Yup.object({
 interface filterFormProps {
   id: number | null;
   handleEdit: (filter: string) => void;
+  handleAdd: (filter: string) => void;
 }
 
-const FilterForm = ({ id, handleEdit }: filterFormProps) => {
+const FilterForm = ({ id, handleEdit, handleAdd }: filterFormProps) => {
   const [formValues, setFormValues] = useState<formValueType | null>(null);
   const { filters } = useInventory();
-  const { addFilterHandler } = useInventoryActions();
   const { addToast } = useToasts();
+  const formRef = useRef<HTMLFormElement>(null!);
 
   useEffect(() => {
+      formRef.current.scrollIntoView();
     if (id) {
       setFormValues({
         filter: filters.find((filter) => filter.id === id)?.value || "",
       });
+    }
+    return ()=> {
+        console.log(1);
     }
   }, [id]);
 
@@ -52,9 +55,9 @@ const FilterForm = ({ id, handleEdit }: filterFormProps) => {
       return;
     }
     if (!isExistFilter(filters, values.filter)) {
-      addFilterHandler(values);
-      addToast(`${values.filter} successfuly added`, { appearance: "success" });
-      formik.handleReset();
+        addToast(`${values.filter} successfuly added`, { appearance: "success" });
+        formik.handleReset();
+        handleAdd(values.filter);
     } else
       addToast(`${values.filter} is already exist`, { appearance: "error" });
   };
@@ -68,7 +71,11 @@ const FilterForm = ({ id, handleEdit }: filterFormProps) => {
   });
 
   return (
-    <form className={`rounded-lg shadow-lg p-5 mx-auto lg:w-1/3`} onSubmit={formik.handleSubmit}>
+    <form
+      className={`rounded-lg shadow-lg p-5 mx-auto lg:w-1/3`}
+      onSubmit={formik.handleSubmit}
+      ref={formRef}
+    >
       <Input
         type="text"
         name="filter"

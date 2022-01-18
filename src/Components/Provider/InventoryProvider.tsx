@@ -70,9 +70,10 @@ export const useInventory = () => useContext(InventoryContext);
 export const useInventoryActions = () => {
     const dispatch = useContext(InventoryActionContext);
 
-    const addFilterHandler = ({filter}: { filter: string }) => {
+    const addFilterHandler = (filter: string ) => {
         dispatch({type: inventoryCases.ADDFILTER, payload: filter})
     }
+    
     const removeFilterHandler = (id: number) => {
         dispatch({type: inventoryCases.REMOVEFILTER, payload: id});
     }

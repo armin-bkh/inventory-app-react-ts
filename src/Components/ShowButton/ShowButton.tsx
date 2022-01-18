@@ -19,7 +19,7 @@ const ShowButton = ({ setShow, show, product }: showButtonType) => {
   return (
     <button
       type="button"
-      className={`block w-full rounded-full py-2 mt-5 ${
+      className={`block w-full rounded-full py-1 mt-5 ${
         product ? "bg-pink-500 text-white" : "bg-green-600 text-white"
       }`}
       onClick={setShow}
