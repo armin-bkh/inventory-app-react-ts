@@ -3,18 +3,19 @@ import React from "react";
 type inputProps = {
   name: string;
   lbl: string;
+  As: "products" | "filters",
   formik: any;
 } & React.ComponentProps<"input">;
 
-const Input = ({ name, formik, id, lbl, ...rest }: inputProps) => {
+const Input = ({ As, name, formik, id, lbl, ...rest }: inputProps) => {
   return (
     <fieldset className="flex flex-col">
       <label className="pb-2" htmlFor={id}>
         {lbl}:
       </label>
       <input
-        className="border rounded-md mb-1 px-3 py-1 outline-none focus:border-emerald-600
-        focus:shadow transition-all"
+        className={`border rounded-md mb-1 px-3 py-1 outline-none ${As === "products" ? 'focus:border-pink-600' : 'focus:border-green-600'} 
+        focus:shadow transition-all`}
         id={id}
         name={name}
         placeholder={`enter ${lbl}`}

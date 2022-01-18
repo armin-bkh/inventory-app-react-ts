@@ -77,6 +77,7 @@ const FilterForm = ({ id, handleEdit, handleAdd }: filterFormProps) => {
       ref={formRef}
     >
       <Input
+        As="filters"
         type="text"
         name="filter"
         id="filterInput"

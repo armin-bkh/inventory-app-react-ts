@@ -35,9 +35,9 @@ const ProductForm = () => {
 
 
     return (
-        <form className='p-5 shadow-lgrounded-lg shadow-lg mx-auto lg:w-1/3' onSubmit={formik.handleSubmit}>
-            <Input id='productName' lbl='name' name='name' type="text" formik={formik} />
-            <Input id='productFilter' lbl='filter' name='filter' type="text" formik={formik} />
+        <form className='p-5 rounded-lg shadow-lg mx-auto lg:w-1/3' onSubmit={formik.handleSubmit}>
+            <Input As="products" id='productName' lbl='name' name='name' type="text" formik={formik} />
+            <Input As="products" id='productFilter' lbl='filter' name='filter' type="text" formik={formik} />
             <button
         className="rounded-md bg-pink-600 text-white px-3 py-1 mt-5 disabled:bg-opacity-50"
         type="submit"
