@@ -62,6 +62,10 @@ const reducer = (state: inventoryStateType, action: inventoryActionType) => {
         return { ...state, products: [...state.products, newProduct] }
     }
 
+    case inventoryCases.REMOVEPRODUCT: {
+        return { ...state, products: state.products.filter(product => product.id !== action.payload) }
+    }
+
     default:
       return state;
   }
@@ -110,10 +114,15 @@ export const useInventoryActions = () => {
     dispatch({ type: inventoryCases.ADDPRODUCT, payload: product });
   };
 
+  const removeProductHandler = (id: number) => {
+    dispatch({type: inventoryCases.REMOVEPRODUCT, payload: id});
+  }
+
   return {
     addFilterHandler,
     removeFilterHandler,
     editFilterHandler,
     addProductHandler,
+    removeProductHandler
   };
 };
