@@ -38,6 +38,10 @@ const InventoryProvider = ({ children }: inventoryProviderProps) => {
         dispatch({type: "fetch"})
     }, [])
 
+    useEffect(()=> {
+        localStorage.setItem('inventory', JSON.stringify(inventory));
+    }, [inventory])
+
     return (
         <InventoryContext.Provider value={inventory}>
             <InventoryActionContext.Provider value={dispatch}>

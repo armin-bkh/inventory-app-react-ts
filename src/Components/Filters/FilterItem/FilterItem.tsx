@@ -6,9 +6,10 @@ import { useState } from "react";
 
 interface filterItemProps {
   filter: filters;
+  onDelete: () => void;
 }
 
-const FilterItem = ({ filter }: filterItemProps) => {
+const FilterItem = ({ filter, onDelete }: filterItemProps) => {
   const [isShow, setIsShow] = useState(false);
   const { products } = useInventory();
   const { removeFilterHandler } = useInventoryActions();
@@ -40,7 +41,7 @@ const FilterItem = ({ filter }: filterItemProps) => {
           type="button"
           className="text-lg w-7 h-7 flex justify-center items-center border
          border-red-400 bg-red-200 text-red-500 rounded-full"
-          onClick={() => removeFilterHandler(filter.id)}
+          onClick={onDelete}
         >
           <AiTwotoneDelete />
         </button>
