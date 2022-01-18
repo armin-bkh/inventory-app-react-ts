@@ -2,6 +2,8 @@ import Input from '../../Common/Input/Input';
 import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import { useToasts } from 'react-toast-notifications';
+import { useInventory } from '../../Provider/InventoryProvider';
+import { isExistProduct } from '../../Utils/isExistProduct';
 
 interface productFormValues {
     name: string,
@@ -26,12 +28,15 @@ interface productFormProps {
 
 const ProductForm = ({ handleAdd }: productFormProps) => {
     const { addToast } = useToasts();
+    const { products } = useInventory();
 
     const onSubmit = (values: productFormValues) => {
-        console.log(values);
-        handleAdd(values);
-        formik.handleReset();
-        addToast(`${values.name} successfuly added`, { appearance: 'success' })
+        if(!isExistProduct(products, values.name)){
+            handleAdd(values);
+            addToast(`${values.name} successfuly added`, { appearance: 'success' })
+            formik.handleReset();
+        }
+        else addToast(`${values.name} is already exist`, { appearance: 'error' })
     }
 
     const formik: FormikProps<productFormValues> = useFormik<productFormValues>({

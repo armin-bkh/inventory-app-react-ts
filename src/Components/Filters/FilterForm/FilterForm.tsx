@@ -58,8 +58,8 @@ const FilterForm = ({ id, handleEdit, handleAdd }: filterFormProps) => {
         addToast(`${values.filter} successfuly added`, { appearance: "success" });
         formik.handleReset();
         handleAdd(values.filter);
-    } else
-      addToast(`${values.filter} is already exist`, { appearance: "error" });
+      } else
+        addToast(`${values.filter} is already exist`, { appearance: "error" });
   };
 
   const formik: FormikProps<formValueType> = useFormik<formValueType>({
