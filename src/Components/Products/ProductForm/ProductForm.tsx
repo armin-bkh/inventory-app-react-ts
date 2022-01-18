@@ -18,11 +18,17 @@ const validationSchema = Yup.object({
     filter: Yup.string().required('product filter is required'),
 })
 
+interface productFormProps {
+    handleAdd: (product: productFormValues) => void;
+}
 
-const ProductForm = () => {
+
+const ProductForm = ({ handleAdd }: productFormProps) => {
 
     const onSubmit = (values: productFormValues) => {
         console.log(values);
+        handleAdd(values);
+        formik.handleReset();
     }
 
     const formik: FormikProps<productFormValues> = useFormik<productFormValues>({
