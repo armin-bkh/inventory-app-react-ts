@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useToasts } from "react-toast-notifications";
 import {
   useInventory,
   useInventoryActions,
@@ -13,6 +14,12 @@ const Filters = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [edit, setEdit] = useState<number | null>(null);
   const { removeFilterHandler, editFilterHandler, addFilterHandler } = useInventoryActions();
+  const { addToast } = useToasts();
+
+  const deleteHandler = (label: string, id: number) => {
+    addToast(`${label} successfuly removed`, { appearance: 'success' })
+    removeFilterHandler(id);
+  }
 
   const setEditHandler = (id: number) => {
       setIsShow(true);
@@ -38,7 +45,7 @@ const Filters = () => {
   return (
     <section className="shadow-inner p-3 rounded-xl bg-white">
       {filters.length > 0 && (
-        <FiltersList onDelete={removeFilterHandler} onEdit={setEditHandler} />
+        <FiltersList onDelete={deleteHandler} onEdit={setEditHandler} />
       )}
       {(filters.length === 0 || isShow) && <FilterForm id={edit} handleEdit={submitEditHandler} handleAdd={submitAddHandler} />}
       {filters.length > 0 && <ShowButton
