@@ -1,0 +1,13 @@
+.selectBox{
+    .selectBoxInput{
+        padding: 5px 10px;
+        border-radius: 6px;
+        border: 1px #ccc solid;
+        outline: none;
+        transition: all .3s linear;
+
+        &:focus{
+            border-color: #db2777;
+        }
+    }
+}

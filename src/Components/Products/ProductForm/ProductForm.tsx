@@ -59,7 +59,7 @@ const ProductForm = ({ handleAdd }: productFormProps) => {
         <form className='p-5 rounded-lg shadow-lg mx-auto lg:w-1/3' onSubmit={formik.handleSubmit}>
             <Input As="products" id='productName' lbl='name' name='name' type="text" formik={formik} />
             <Input As="products" id='productFilter' lbl='filter' name='filter' type="text" formik={formik} />
-            <SelectBox options={filters} value={formik.values.filter} onChange={filterChangeHandler} />
+            <SelectBox width={'100%'} options={filters} value={formik.values.filter} onChange={filterChangeHandler} />
             <button
         className="rounded-md bg-pink-600 text-white px-3 py-1 mt-5 disabled:bg-opacity-50"
         type="submit"
