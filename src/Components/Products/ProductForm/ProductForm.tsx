@@ -4,6 +4,8 @@ import * as Yup from 'yup';
 import { useToasts } from 'react-toast-notifications';
 import { useInventory } from '../../Provider/InventoryProvider';
 import { isExistProduct } from '../../Utils/isExistProduct';
+import SelectBox from '../../Common/SelectBox/SelectBox';
+import { filters } from '../../Provider/InventoryProvider.type';
 
 interface productFormValues {
     name: string,
@@ -28,7 +30,7 @@ interface productFormProps {
 
 const ProductForm = ({ handleAdd }: productFormProps) => {
     const { addToast } = useToasts();
-    const { products } = useInventory();
+    const { products, filters } = useInventory();
 
     const onSubmit = (values: productFormValues) => {
         if(!isExistProduct(products, values.name)){
@@ -37,6 +39,11 @@ const ProductForm = ({ handleAdd }: productFormProps) => {
             formik.handleReset();
         }
         else addToast(`${values.name} is already exist`, { appearance: 'error' })
+    }
+
+    const filterChangeHandler = (selectedOption: filters) => {
+        console.log(selectedOption);
+        formik.setFieldValue('filter', selectedOption.value);
     }
 
     const formik: FormikProps<productFormValues> = useFormik<productFormValues>({
@@ -52,6 +59,7 @@ const ProductForm = ({ handleAdd }: productFormProps) => {
         <form className='p-5 rounded-lg shadow-lg mx-auto lg:w-1/3' onSubmit={formik.handleSubmit}>
             <Input As="products" id='productName' lbl='name' name='name' type="text" formik={formik} />
             <Input As="products" id='productFilter' lbl='filter' name='filter' type="text" formik={formik} />
+            <SelectBox options={filters} value={formik.values.filter} onChange={filterChangeHandler} />
             <button
         className="rounded-md bg-pink-600 text-white px-3 py-1 mt-5 disabled:bg-opacity-50"
         type="submit"
