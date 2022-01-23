@@ -8,6 +8,7 @@ import {
   inventoryActionType,
   inventoryCases,
   inventoryStateType,
+  products,
 } from "./InventoryProvider.type";
 
 interface inventoryProviderProps {
@@ -66,6 +67,16 @@ const reducer = (state: inventoryStateType, action: inventoryActionType) => {
         return { ...state, products: state.products.filter(product => product.id !== action.payload) }
     }
 
+    case inventoryCases.EDITPRODUCT: {
+      const productsClone = [...state.products];
+      const index = productsClone.findIndex(product => product.id === action.payload.id);
+      const selectedProduct = {...productsClone[index]};
+      selectedProduct.name = action.payload.name;
+      selectedProduct.filter = action.payload.filter;
+      productsClone[index] = selectedProduct;
+      return { ...state, product: productsClone };
+    }
+
     default:
       return state;
   }
@@ -118,11 +129,16 @@ export const useInventoryActions = () => {
     dispatch({type: inventoryCases.REMOVEPRODUCT, payload: id});
   }
 
+  const editProductHandler = (product: products) => {
+    dispatch({type: inventoryCases.EDITPRODUCT, payload: product});
+  }
+
   return {
     addFilterHandler,
     removeFilterHandler,
     editFilterHandler,
     addProductHandler,
-    removeProductHandler
+    removeProductHandler,
+    editProductHandler
   };
 };
