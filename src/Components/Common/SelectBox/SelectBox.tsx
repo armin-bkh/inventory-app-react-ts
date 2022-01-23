@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { string } from "yup";
 import { filters } from "../../Provider/InventoryProvider.type";
 import styles from "./SelectBox.module.scss";
+import SelectOptions from "./SelectOptions/SelectOptions";
 
 interface selectBoxProps {
   width?: number | string;
@@ -28,7 +29,7 @@ const SelectBox = ({ value, onChange, options, width }: selectBoxProps) => {
         };
     }, [optionsRef])
 
-  const changeOptionHandler = (selectedOption: filters) => {
+  const selectOptionHandler = (selectedOption: filters) => {
     setInputValue(selectedOption.label);
     onChange(selectedOption);
     setIsShow(false);
@@ -46,15 +47,7 @@ const SelectBox = ({ value, onChange, options, width }: selectBoxProps) => {
           onChange={(e) => setInputValue(e.target.value)}
         />
       </div>
-      {isShow && (
-        <div>
-          {options.map((option) => (
-            <div onClick={() => changeOptionHandler(option)} key={option.id}>
-              {option.label}
-            </div>
-          ))}
-        </div>
-      )}
+      {isShow && <SelectOptions onSelect={selectOptionHandler} options={options} />}
     </div>
   );
 };
