@@ -6,28 +6,41 @@ import SelectOptions from "./SelectOptions/SelectOptions";
 
 interface selectBoxProps {
   width?: number | string;
+  placeholder?: string;
   value: string;
   onChange: (selectedOption: filters) => void;
   options: filters[];
+  onBlur?: () => void;
 }
 
-const SelectBox = ({ value, onChange, options, width }: selectBoxProps) => {
+const SelectBox = ({
+  value,
+  onChange,
+  onBlur,
+  options,
+  width,
+  placeholder,
+}: selectBoxProps) => {
   const [inputValue, setInputValue] = useState<string>(value || "");
   const [isShow, setIsShow] = useState<boolean>(false);
   const optionsRef = useRef<HTMLDivElement>(null!);
 
-    useEffect(()=> {
-        function handleCloseOptions(e: any){
-            if(optionsRef.current && !optionsRef.current.contains(e.target)){
-                setIsShow(false)
-            }
-        }
+  useEffect(() => {
+    function handleCloseOptions(e: any) {
+      if (optionsRef.current && !optionsRef.current.contains(e.target)) {
+        setIsShow(false);
+      }
+    }
 
-        document.addEventListener("mousedown", handleCloseOptions);
-        return () => {
-            document.removeEventListener("mousedown", handleCloseOptions);
-        };
-    }, [optionsRef])
+    document.addEventListener("mousedown", handleCloseOptions);
+    return () => {
+      document.removeEventListener("mousedown", handleCloseOptions);
+    };
+  }, [optionsRef]);
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   const selectOptionHandler = (selectedOption: filters) => {
     setInputValue(selectedOption.label);
@@ -39,15 +52,19 @@ const SelectBox = ({ value, onChange, options, width }: selectBoxProps) => {
     <div ref={optionsRef} className={styles.selectBox}>
       <div>
         <input
-            onClick={()=> setIsShow(true)}
+          onFocus={() => setIsShow(true)}
           style={{ width }}
           className={styles.selectBoxInput}
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={()=> setInputValue(inputValue)}
+          onBlur={onBlur}
+          placeholder={placeholder || "Select..."}
         />
       </div>
-      {isShow && <SelectOptions onSelect={selectOptionHandler} options={options} />}
+      {isShow && (
+        <SelectOptions onSelect={selectOptionHandler} options={options} />
+      )}
     </div>
   );
 };

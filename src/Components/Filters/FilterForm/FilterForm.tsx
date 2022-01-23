@@ -39,9 +39,6 @@ const FilterForm = ({ id, handleEdit, handleAdd }: filterFormProps) => {
         filter: filters.find((filter) => filter.id === id)?.value || "",
       });
     }
-    return ()=> {
-        console.log(1);
-    }
   }, [id]);
 
   const onSubmit = (values: formValueType) => {
