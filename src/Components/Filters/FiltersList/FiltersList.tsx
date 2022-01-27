@@ -1,4 +1,3 @@
-import { filters } from '../../Provider/InventoryProvider.type';
 import { useInventory } from "../../Provider/InventoryProvider";
 import FilterItem from "../FilterItem/FilterItem";
 

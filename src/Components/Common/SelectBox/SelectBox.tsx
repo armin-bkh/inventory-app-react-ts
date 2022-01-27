@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { string } from "yup";
 import { filters } from "../../Provider/InventoryProvider.type";
 import styles from "./SelectBox.module.scss";
 import SelectOptions from "./SelectOptions/SelectOptions";

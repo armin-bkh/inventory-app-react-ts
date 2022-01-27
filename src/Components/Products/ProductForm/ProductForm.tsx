@@ -48,14 +48,14 @@ const ProductForm = ({ id, handleEdit, handleAdd }: productFormProps) => {
 
   const onSubmit = (values: productFormValues) => {
     if (id) {
-      handleEdit(values);
       setFormValues(null);
       formik.handleReset();
+      handleEdit(values);
       return;
     }
     if (!isExistProduct(products, values.name)) {
-      handleAdd(values);
       formik.handleReset();
+      handleAdd(values);
     } else addToast(`${values.name} is already exist`, { appearance: "error" });
   };
 

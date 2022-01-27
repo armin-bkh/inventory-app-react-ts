@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import { useInventory, useInventoryActions } from "../Provider/InventoryProvider";
-import { filters, products } from "../Provider/InventoryProvider.type";
 import ShowButton from "../ShowButton/ShowButton";
 import ProductForm from "./ProductForm/ProductForm";
 import ProductsList from "./ProductsList/ProductsList";

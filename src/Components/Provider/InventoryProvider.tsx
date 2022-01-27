@@ -4,11 +4,9 @@ import {
   InventoryContext,
 } from "../../Context/InventoryContext";
 import {
-  filters,
   inventoryActionType,
   inventoryCases,
   inventoryStateType,
-  products,
 } from "./InventoryProvider.type";
 
 interface inventoryProviderProps {
@@ -23,8 +21,7 @@ const initialState = {
 const reducer = (state: inventoryStateType, action: inventoryActionType) => {
   switch (action.type) {
     case "fetch": {
-      const savedInventory = JSON.parse(localStorage.getItem("inventory")!);
-      return savedInventory || state;
+      return action.payload || state;
     }
 
     case inventoryCases.ADDFILTER: {
@@ -94,7 +91,8 @@ const InventoryProvider = ({ children }: inventoryProviderProps) => {
   const [inventory, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    dispatch({ type: "fetch" });
+    const savedInventory = JSON.parse(localStorage.getItem("inventory")!);
+    dispatch({ type: "fetch", payload: savedInventory });
   }, []);
 
   useEffect(() => {
