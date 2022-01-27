@@ -6,6 +6,7 @@ import { useInventory } from "../../Provider/InventoryProvider";
 import { isExistProduct } from "../../Utils/isExistProduct";
 import SelectBox from "../../Common/SelectBox/SelectBox";
 import { filters } from "../../Provider/InventoryProvider.type";
+import { useEffect, useRef, useState } from "react";
 
 interface productFormValues {
   name: string;
@@ -24,16 +25,37 @@ const validationSchema = Yup.object({
 
 interface productFormProps {
   handleAdd: (product: productFormValues) => void;
+  handleEdit: (product: productFormValues) => void;
+  id: number | null;
 }
 
-const ProductForm = ({ handleAdd }: productFormProps) => {
+const ProductForm = ({ id, handleEdit, handleAdd }: productFormProps) => {
+  const [formValues, setFormValues] = useState<productFormValues | null>(null);
   const { addToast } = useToasts();
   const { products, filters } = useInventory();
+  const formRef = useRef<HTMLFormElement>(null!);
+
+  useEffect(() => {
+    formRef.current.scrollIntoView();
+    if (id) {
+      console.log(products);
+      console.log(id);
+      setFormValues({
+        name: products.find(product => product.id === id)?.name || "",
+        filter: products.find(product => product.id === id)?.filter || "",
+      });
+    }
+  }, [id]);
 
   const onSubmit = (values: productFormValues) => {
+    if (id) {
+      handleEdit(values);
+      setFormValues(null);
+      formik.handleReset();
+      return;
+    }
     if (!isExistProduct(products, values.name)) {
       handleAdd(values);
-      addToast(`${values.name} successfuly added`, { appearance: "success" });
       formik.handleReset();
     } else addToast(`${values.name} is already exist`, { appearance: "error" });
   };
@@ -43,7 +65,7 @@ const ProductForm = ({ handleAdd }: productFormProps) => {
   };
 
   const formik: FormikProps<productFormValues> = useFormik<productFormValues>({
-    initialValues,
+    initialValues: formValues || initialValues,
     onSubmit,
     validationSchema,
     enableReinitialize: true,
@@ -52,6 +74,7 @@ const ProductForm = ({ handleAdd }: productFormProps) => {
 
   return (
     <form
+      ref={formRef}
       className="p-5 rounded-lg shadow-lg mx-auto lg:w-1/3"
       onSubmit={formik.handleSubmit}
     >
@@ -64,26 +87,26 @@ const ProductForm = ({ handleAdd }: productFormProps) => {
         formik={formik}
       />
       <fieldset className="flex flex-col">
-      <label className="mb-2">
-          filter:
-      </label>
-      <SelectBox
-        width={"100%"}
-        options={filters}
-        value={formik.values.filter}
-        onChange={filterChangeHandler}
-        onBlur={()=> formik.setFieldTouched('filter', true)}
-      />
-      {formik.touched.filter && formik.errors.filter && (
-        <span className="text-red-600 text-xs ml-3">{formik.errors.filter}</span>
-      )}
+        <label className="mb-2">filter:</label>
+        <SelectBox
+          width={"100%"}
+          options={filters}
+          value={formik.values.filter}
+          onChange={filterChangeHandler}
+          onBlur={() => formik.setFieldTouched("filter", true)}
+        />
+        {formik.touched.filter && formik.errors.filter && (
+          <span className="text-red-600 text-xs ml-3">
+            {formik.errors.filter}
+          </span>
+        )}
       </fieldset>
       <button
         className="rounded-md bg-pink-600 text-white px-3 py-1 mt-5 disabled:bg-opacity-50"
         type="submit"
         disabled={!formik.isValid}
       >
-        Add Product
+        {!id ? "Add Product" : "Edit Product"}
       </button>
     </form>
   );

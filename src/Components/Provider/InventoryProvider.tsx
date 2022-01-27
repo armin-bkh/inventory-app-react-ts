@@ -74,7 +74,7 @@ const reducer = (state: inventoryStateType, action: inventoryActionType) => {
       selectedProduct.name = action.payload.name;
       selectedProduct.filter = action.payload.filter;
       productsClone[index] = selectedProduct;
-      return { ...state, product: productsClone };
+      return { ...state, products: productsClone };
     }
 
     default:
@@ -129,8 +129,8 @@ export const useInventoryActions = () => {
     dispatch({type: inventoryCases.REMOVEPRODUCT, payload: id});
   }
 
-  const editProductHandler = (product: products) => {
-    dispatch({type: inventoryCases.EDITPRODUCT, payload: product});
+  const editProductHandler = (id: number, product: {name: string, filter: string}) => {
+    dispatch({type: inventoryCases.EDITPRODUCT, payload: {...product, id}});
   }
 
   return {

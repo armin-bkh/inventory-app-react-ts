@@ -3,9 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import * as Yup from "yup";
 import Input from "../../Common/Input/Input";
-import {
-  useInventory,
-} from "../../Provider/InventoryProvider";
+import { useInventory } from "../../Provider/InventoryProvider";
 import { isExistFilter } from "../../Utils/isExistFilter";
 
 export interface formValueType {
@@ -33,7 +31,7 @@ const FilterForm = ({ id, handleEdit, handleAdd }: filterFormProps) => {
   const formRef = useRef<HTMLFormElement>(null!);
 
   useEffect(() => {
-      formRef.current.scrollIntoView();
+    formRef.current.scrollIntoView();
     if (id) {
       setFormValues({
         filter: filters.find((filter) => filter.id === id)?.value || "",
@@ -52,11 +50,11 @@ const FilterForm = ({ id, handleEdit, handleAdd }: filterFormProps) => {
       return;
     }
     if (!isExistFilter(filters, values.filter)) {
-        addToast(`${values.filter} successfuly added`, { appearance: "success" });
-        formik.handleReset();
-        handleAdd(values.filter);
-      } else
-        addToast(`${values.filter} is already exist`, { appearance: "error" });
+      addToast(`${values.filter} successfuly added`, { appearance: "success" });
+      handleAdd(values.filter);
+      formik.handleReset();
+    } else
+      addToast(`${values.filter} is already exist`, { appearance: "error" });
   };
 
   const formik: FormikProps<formValueType> = useFormik<formValueType>({
