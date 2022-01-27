@@ -49,10 +49,15 @@ const reducer = (state: inventoryStateType, action: inventoryActionType) => {
         (filter) => filter.id === action.payload.id
       );
       const selectedFilter = { ...filtersClone[index] };
+      const updatedProducts = state.products.map(product => { 
+        if(product.filter.toLowerCase() === selectedFilter.value.toLowerCase()){
+          return { ...product, filter: action.payload.filter }
+        } return product
+       })
       selectedFilter.label = action.payload.filter;
       selectedFilter.value = action.payload.filter;
       filtersClone[index] = selectedFilter;
-      return { ...state, filters: filtersClone };
+      return { ...state, filters: filtersClone, products: updatedProducts };
     }
 
     case inventoryCases.ADDPRODUCT: {
