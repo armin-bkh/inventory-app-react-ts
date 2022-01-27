@@ -41,18 +41,14 @@ const FilterForm = ({ id, handleEdit, handleAdd }: filterFormProps) => {
 
   const onSubmit = (values: formValueType) => {
     if (id) {
-      handleEdit(values.filter);
       setFormValues(null);
-      addToast(`${values.filter} successfuly edited`, {
-        appearance: "success",
-      });
       formik.handleReset();
+      handleEdit(values.filter);
       return;
     }
     if (!isExistFilter(filters, values.filter)) {
-      addToast(`${values.filter} successfuly added`, { appearance: "success" });
-      handleAdd(values.filter);
       formik.handleReset();
+      handleAdd(values.filter);
     } else
       addToast(`${values.filter} is already exist`, { appearance: "error" });
   };

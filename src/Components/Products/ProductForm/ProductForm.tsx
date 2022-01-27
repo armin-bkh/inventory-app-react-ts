@@ -38,11 +38,10 @@ const ProductForm = ({ id, handleEdit, handleAdd }: productFormProps) => {
   useEffect(() => {
     formRef.current.scrollIntoView();
     if (id) {
-      console.log(products);
-      console.log(id);
+      const selectedProduct = products.find((product) => product.id === id);
       setFormValues({
-        name: products.find(product => product.id === id)?.name || "",
-        filter: products.find(product => product.id === id)?.filter || "",
+        name: selectedProduct?.name || "",
+        filter: selectedProduct?.filter || "",
       });
     }
   }, [id]);

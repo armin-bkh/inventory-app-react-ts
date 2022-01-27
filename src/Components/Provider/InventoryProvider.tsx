@@ -37,9 +37,12 @@ const reducer = (state: inventoryStateType, action: inventoryActionType) => {
     }
 
     case inventoryCases.REMOVEFILTER: {
+      const filteredFilters = state.filters.filter(filter => filter.id !== action.payload);
+      const selectedFilter = state.filters.find(filter => filter.id === action.payload);
+      const updatedProducts = state.products.filter(product => product.filter.toLowerCase() !== selectedFilter?.value.toLowerCase());
       return {
-        ...state,
-        filters: state.filters.filter((filter) => filter.id !== action.payload),
+        products: updatedProducts,
+        filters: filteredFilters,
       };
     }
 
