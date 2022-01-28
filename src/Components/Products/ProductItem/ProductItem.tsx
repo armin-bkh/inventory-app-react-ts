@@ -1,11 +1,7 @@
-import {
-  useInventory,
-  useInventoryActions,
-} from "../../Provider/InventoryProvider";
+import { useInventory } from "../../Provider/InventoryProvider";
 import { filters } from "../../Provider/InventoryProvider.type";
 import { filteredProducts } from "../../Utils/filteredProducts";
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
-import { useToasts } from "react-toast-notifications";
 
 interface productItemProps {
   filter: filters;
@@ -15,14 +11,12 @@ interface productItemProps {
 
 const ProductItem = ({ filter, onEdit, onDelete }: productItemProps) => {
   const { products } = useInventory();
-  const { removeProductHandler } = useInventoryActions();
-  const { addToast } = useToasts();
 
   return (
     <div
       className={`bg-pink-400 py-2 px-3 flex flex-col items-center rounded-md shadow-md shadow-pink-400/50`}
     >
-      <p className="text-white mb-4 border-b border-white w-8/12 text-center py-2">
+      <p className="text-white mb-4 border-b capitalize border-white w-8/12 text-center py-2">
         {filter.label}
       </p>
       {filteredProducts(products, filter.value).length ? (

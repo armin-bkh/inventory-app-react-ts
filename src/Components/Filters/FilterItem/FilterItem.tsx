@@ -16,7 +16,7 @@ const FilterItem = ({ filter, onDelete, onEdit }: filterItemProps) => {
 
   return (
     <div
-      className="relative p-3 rounded-md flex flex-col items-center bg-green-400 shadow-md shadow-green-400/50 overflow-hidden"
+      className="relative p-3 rounded-md flex flex-col items-center bg-green-400 shadow-md shadow-green-400/50 overflow-hidden capitalize"
       onClick={() => setIsShow((prevIsShow) => !prevIsShow)}
       onMouseLeave={() => setIsShow(false)}
     >
