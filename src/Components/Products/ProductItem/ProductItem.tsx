@@ -10,17 +10,13 @@ import { useToasts } from "react-toast-notifications";
 interface productItemProps {
   filter: filters;
   onEdit: (id: number) => void;
+  onDelete: (name: string, id: number) => void;
 }
 
-const ProductItem = ({ filter, onEdit }: productItemProps) => {
+const ProductItem = ({ filter, onEdit, onDelete }: productItemProps) => {
   const { products } = useInventory();
   const { removeProductHandler } = useInventoryActions();
   const { addToast } = useToasts();
-
-  const removeHandler = (name: string, id: number) => {
-    removeProductHandler(id);
-    addToast(`${name} successfuly removed`, { appearance: "success" });
-  };
 
   return (
     <div
@@ -39,14 +35,14 @@ const ProductItem = ({ filter, onEdit }: productItemProps) => {
               {product.name}
               <div>
                 <button
-                  onClick={()=> onEdit(product.id)}
+                  onClick={() => onEdit(product.id)}
                   type="button"
                   className="text-yellow-400 text-xl mr-3"
                 >
                   <AiFillEdit />
                 </button>
                 <button
-                  onClick={() => removeHandler(product.name, product.id)}
+                  onClick={() => onDelete(product.name, product.id)}
                   type="button"
                   className="text-red-800 text-xl"
                 >

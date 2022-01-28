@@ -43,7 +43,7 @@ const ProductForm = ({ id, handleEdit, handleAdd }: productFormProps) => {
         name: selectedProduct?.name || "",
         filter: selectedProduct?.filter || "",
       });
-    }
+    } else setFormValues(null);
   }, [id]);
 
   const onSubmit = (values: productFormValues) => {

@@ -12,8 +12,17 @@ const Products = () => {
   const [edit, setEdit] = useState<number | null>(null);
   const [isShow, setIsShow] = useState<boolean>(false);
   const { products, filters } = useInventory();
-  const { addProductHandler, editProductHandler } = useInventoryActions();
+  const { addProductHandler, editProductHandler, removeProductHandler } = useInventoryActions();
   const { addToast } = useToasts();
+
+  const deleteHandler = (name: string, id: number) => {
+    removeProductHandler(id);
+    addToast(`${name} successfuly removed`, {
+      appearance: "success",
+    });
+    setEdit(null);
+    setIsShow(false);
+  }
 
   const setEditHandler = (id: number) => {
     setEdit(id);
@@ -41,7 +50,7 @@ const Products = () => {
 
   return filters.length > 0 ? (
     <section className="p-3 mt-10 shadow-inner rounded-xl bg-white">
-      {products.length > 0 && <ProductsList onEdit={setEditHandler} />}
+      {products.length > 0 && <ProductsList onEdit={setEditHandler} onDelete={deleteHandler} />}
       {(products.length === 0 || isShow) && (
         <ProductForm
           id={edit}
