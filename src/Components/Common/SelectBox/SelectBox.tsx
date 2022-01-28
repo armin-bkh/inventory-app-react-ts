@@ -61,7 +61,7 @@ const SelectBox = ({
           placeholder={placeholder || "Select..."}
         />
       </div>
-      {isShow && (
+      {isShow && options.length > 0 && (
         <SelectOptions onSelect={selectOptionHandler} options={options} />
       )}
     </div>
